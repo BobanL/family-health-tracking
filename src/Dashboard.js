@@ -1,7 +1,6 @@
 import * as React from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
@@ -12,19 +11,6 @@ import Chart from "./Chart";
 import Deposits from "./Deposits";
 import Orders from "./Orders";
 import { Header } from "./Header";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 const drawerWidth = 250;
 export const useStyles = makeStyles((theme) => ({
@@ -139,9 +125,7 @@ export function Dashboard() {
             </Paper>
           </Grid>
         </Grid>
-        <Box sx={{ pt: 4 }}>
-          <Copyright />
-        </Box>
+        <Box sx={{ pt: 4 }}></Box>
       </Container>
     </main>
   );
