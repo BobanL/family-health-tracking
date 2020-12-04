@@ -70,17 +70,58 @@ export const Header = () => {
         <Divider />
         <List>{mainListItems}</List>
         <Divider />
-        <List>{secondaryListItems("Family Members")}</List>
+        <List>
+          {secondaryListItems("Family Unit", [
+            { fieldName: "Parent 1 SSN" },
+            { fieldName: "Parent 2 SSN" },
+          ])}
+        </List>
         <Divider />
-        <List>{secondaryListItems("Medical Records")}</List>
+        <List>
+          {secondaryListItems("Family Members", [
+            { fieldName: "SSN" },
+            { fieldName: "First Name" },
+            { fieldName: "Middle Name" },
+            { fieldName: "Last Name" },
+            { fieldName: "Sex" },
+            { fieldName: "Birthday" },
+            { fieldName: "Address" },
+            { fieldName: "Family Unit" },
+          ])}
+        </List>
         <Divider />
-        <List>{secondaryListItems("Family Member")}</List>
+        <List>
+          {secondaryListItems("Medical Records", [
+            { fieldName: "SSN" },
+            { fieldName: "Date" },
+            { fieldName: "Reason" },
+            { fieldName: "Diagnosis" },
+            { fieldName: "Doctor Number" },
+          ])}
+        </List>
         <Divider />
-        <List>{secondaryListItems("Doctors")}</List>
+        <List>
+          {secondaryListItems("Doctors", [
+            { fieldName: "Doctor Name" },
+            { fieldName: "Doctor Location" },
+          ])}
+        </List>
         <Divider />
-        <List>{secondaryListItems("Illness")}</List>
+        <List>
+          {secondaryListItems("Illness", [
+            { fieldName: "Illness Name" },
+            { fieldName: "Medication Number" },
+            { fieldName: "Illness Description" },
+          ])}
+        </List>
         <Divider />
-        <List>{secondaryListItems("Medication")}</List>
+        <List>
+          {secondaryListItems("Medication", [
+            { fieldName: "Medication Name" },
+            { fieldName: "Medication Type" },
+            { fieldName: "Medication Effect" },
+          ])}
+        </List>
       </Drawer>
     </div>
   );
