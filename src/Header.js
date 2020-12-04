@@ -68,7 +68,7 @@ export const Header = () => {
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
+        <List>{mainListItems("med_rec", "SSN", 123)}</List>
         <Divider />
         <List>
           {secondaryListItems("Family Unit", [

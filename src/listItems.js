@@ -5,36 +5,40 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import PeopleIcon from "@material-ui/icons/People";
-import BarChartIcon from "@material-ui/icons/BarChart";
-import LayersIcon from "@material-ui/icons/Layers";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import { Link } from "react-router-dom";
 
-export const mainListItems = (
-  <div>
-    <Link
-      style={{ textDecoration: "none", color: "#000" }}
-      to={{
-        pathname: `/`,
-      }}
-    >
+export const mainListItems = (tableName, fieldName, id) => {
+  return (
+    <div>
+      <Link
+        style={{ textDecoration: "none", color: "#000" }}
+        to={{
+          pathname: `/table`,
+          state: {
+            tableName,
+            fieldName,
+            id,
+          },
+        }}
+      >
+        <ListItem button>
+          <ListItemIcon>
+            <DashboardIcon />
+          </ListItemIcon>
+          <ListItemText primary="Dashboard" />
+        </ListItem>
+      </Link>
       <ListItem button>
         <ListItemIcon>
-          <DashboardIcon />
+          <ShoppingCartIcon />
         </ListItemIcon>
-        <ListItemText primary="Dashboard" />
+        <ListItemText primary="Orders" />
       </ListItem>
-    </Link>
-    <ListItem button>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Orders" />
-    </ListItem>
-  </div>
-);
+    </div>
+  );
+};
 
 export const secondaryListItems = (name, formFields) => (
   <div>

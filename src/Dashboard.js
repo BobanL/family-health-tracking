@@ -95,6 +95,9 @@ export const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
   },
+  table: {
+    minWidth: 650,
+  },
 }));
 
 export function Dashboard() {
