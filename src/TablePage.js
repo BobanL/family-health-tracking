@@ -33,37 +33,32 @@ export default class TablePage extends React.Component {
           <Grid container>
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                {
-                  this.state.loading || !this.state.formData ? (
-                    <div>loading...</div>
-                  ) : (
-                    <TableContainer component={Paper}>
-                      <Table
-                        className={classes.table}
-                        aria-label="simple table"
-                      >
-                        <TableHead>
+                {this.state.loading || !this.state.formData ? (
+                  <div>loading...</div>
+                ) : (
+                  <TableContainer component={Paper}>
+                    <Table className={classes.table} aria-label="simple table">
+                      <TableHead>
+                        <TableRow>
+                          {Object.keys(this.state.formData[0]).map((key) => (
+                            <TableCell>{key}</TableCell>
+                          ))}
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {this.state.formData.map((row) => (
                           <TableRow>
-                            {Object.keys(this.state.formData[0]).map((key) => (
-                              <TableCell>{key}</TableCell>
+                            {Object.keys(row).map((key) => (
+                              <TableCell component="th" scope="row">
+                                {row[key]}
+                              </TableCell>
                             ))}
                           </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {this.state.formData.map((row) => (
-                            <TableRow>
-                              {Object.keys(row).map((key) => (
-                                <TableCell component="th" scope="row">
-                                  {row[key]}
-                                </TableCell>
-                              ))}
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
-                  )
-                }
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                )}
               </Paper>
             </Grid>
           </Grid>
