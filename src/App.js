@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Header } from "./Header";
 import { CssBaseline } from "@material-ui/core";
 import { AddForm } from "./AddForm";
-import { TablePage } from "./TablePage";
+import TablePage from "./TablePage";
 function App() {
   const classes = useStyles();
 

@@ -9,7 +9,7 @@ import AssignmentIcon from "@material-ui/icons/Assignment";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import { Link } from "react-router-dom";
 
-export const mainListItems = (tableName, fieldName, id) => {
+export const mainListItems = (tableName, fieldName, id, classes) => {
   return (
     <div>
       <Link
@@ -20,6 +20,7 @@ export const mainListItems = (tableName, fieldName, id) => {
             tableName,
             fieldName,
             id,
+            classes,
           },
         }}
       >
