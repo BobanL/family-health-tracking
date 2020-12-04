@@ -16,16 +16,31 @@ export default class TablePage extends React.Component {
   };
 
   async componentDidMount() {
-    const { tableName, fieldName, id } = this.props.location.state;
-    const get = await fetch(
-      `http://localhost:3001/get/${tableName}/${fieldName}/${id}`
-    );
-    const response = await get.json();
-    this.setState({ formData: response, loading: false });
+    if (this.props?.location?.state) {
+      const { tableName, fieldName, id } = this.props?.location?.state;
+      const get = await fetch(
+        `http://localhost:3001/get/${tableName}/${fieldName}/${id}`
+      );
+      const response = await get.json();
+      this.setState({ formData: response, loading: false });
+    }
   }
 
   render() {
-    const classes = this.props?.location?.state?.classes || {};
+    const classes = this.props?.location?.state?.classes;
+    if (!classes) {
+      return (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          404
+        </div>
+      );
+    }
     return (
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
