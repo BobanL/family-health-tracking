@@ -5,11 +5,16 @@ import * as React from "react";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import { Field, Form, Formik } from "formik";
+import { Field, Form, Formik, useFormik } from "formik";
 
 export const AddForm = ({ history }) => {
   const classes = useStyles();
   const formFields = history?.location?.state?.form;
+  let initValues = {};
+  formFields.map((x) => {
+    initValues[x.fieldName] = "";
+  });
+  const formik = useFormik({ initialValues: initValues });
   return (
     <main className={classes.content}>
       <div className={classes.appBarSpacer} />
@@ -22,24 +27,9 @@ export const AddForm = ({ history }) => {
                   email: "",
                   password: "",
                 }}
-                validate={(values) => {
-                  const errors = {};
-                  if (!values.email) {
-                    errors.email = "Required";
-                  } else if (
-                    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(
-                      values.email
-                    )
-                  ) {
-                    errors.email = "Invalid email address";
-                  }
-                  return errors;
-                }}
                 onSubmit={(values, { setSubmitting }) => {
-                  setTimeout(() => {
-                    setSubmitting(false);
-                    alert(JSON.stringify(values, null, 2));
-                  }, 500);
+                  setSubmitting(false);
+                  console.log(formik.values);
                 }}
               >
                 {({ submitForm, isSubmitting }) => (
@@ -47,10 +37,13 @@ export const AddForm = ({ history }) => {
                     {formFields?.map((x, i) => (
                       <div key={x.fieldName + "i"}>
                         <Field
+                          id={x.fieldName}
                           component={TextField}
                           name={x.fieldName}
                           type="text"
                           label={x.fieldName + ""}
+                          onChange={formik.handleChange}
+                          value={formik.values[x.fieldName]}
                         />
                         <br></br>
                         <br></br>
