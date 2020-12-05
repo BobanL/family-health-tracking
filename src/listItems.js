@@ -54,7 +54,7 @@ export const mainListItems = (tableName, fieldName, id, classes) => {
   );
 };
 
-export const secondaryListItems = (name, formFields) => (
+export const secondaryListItems = (name, formFields, tableName) => (
   <div>
     <ListSubheader inset>{name}</ListSubheader>
     <Link
@@ -63,6 +63,7 @@ export const secondaryListItems = (name, formFields) => (
         pathname: `/AddForm`,
         state: {
           form: formFields,
+          table: tableName,
         },
       }}
     >

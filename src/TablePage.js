@@ -41,6 +41,44 @@ export default class TablePage extends React.Component {
         </div>
       );
     }
+    if (this.state.loading) {
+      return (
+        <main className={classes.content}>
+          <div className={classes.appBarSpacer} />
+          <Container maxWidth="lg" className={classes.container}>
+            <Grid container>
+              <Grid item xs={12}>
+                <Paper className={classes.paper}>
+                  <div>loading...</div>
+                </Paper>
+              </Grid>
+            </Grid>
+            <Box sx={{ pt: 4 }}></Box>
+          </Container>
+        </main>
+      );
+    }
+    if (this.state.formData && this.state.formData.length === 0) {
+      return (
+        <main className={classes.content}>
+          <div className={classes.appBarSpacer} />
+          <Container maxWidth="lg" className={classes.container}>
+            <Grid container>
+              <Grid item xs={12}>
+                <Paper className={classes.paper}>
+                  404 - Unable to retrieve data{" "}
+                  {this.props?.location?.state.fieldName} :
+                  {this.props?.location?.state.id} on{" "}
+                  {this.props?.location?.state.tableName}
+                </Paper>
+              </Grid>
+            </Grid>
+            <Box sx={{ pt: 4 }}></Box>
+          </Container>
+        </main>
+      );
+    }
+    console.log(this.state.formData);
     return (
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
@@ -48,7 +86,7 @@ export default class TablePage extends React.Component {
           <Grid container>
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                {this.state.loading || !this.state.formData ? (
+                {this.state.loading && !this.state.formData ? (
                   <div>loading...</div>
                 ) : (
                   <TableContainer component={Paper}>

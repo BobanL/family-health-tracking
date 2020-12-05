@@ -72,56 +72,80 @@ export const Header = () => {
         <List>{mainListItems("med_rec", "SSN", 123, classes)}</List>
         <Divider />
         <List>
-          {secondaryListItems("Family Unit", [
-            { fieldName: "Parent 1 SSN" },
-            { fieldName: "Parent 2 SSN" },
-          ])}
+          {secondaryListItems(
+            "Family Unit",
+            [
+              { fieldName: "Parent 1 SSN", tableName: "Parent1_SSN" },
+              { fieldName: "Parent 2 SSN", tableName: "Parent2_SSN" },
+            ],
+            "fam_unit"
+          )}
         </List>
         <Divider />
         <List>
-          {secondaryListItems("Family Members", [
-            { fieldName: "SSN" },
-            { fieldName: "First Name" },
-            { fieldName: "Middle Name" },
-            { fieldName: "Last Name" },
-            { fieldName: "Sex" },
-            { fieldName: "Birthday" },
-            { fieldName: "Address" },
-            { fieldName: "Family Unit" },
-          ])}
+          {secondaryListItems(
+            "Family Members",
+            [
+              { fieldName: "SSN", tableName: "SSN" },
+              { fieldName: "First Name", tableName: "Fname" },
+              { fieldName: "Middle Name", tableName: "Minit" },
+              { fieldName: "Last Name", tableName: "Lname" },
+              { fieldName: "Sex", tableName: "Sex" },
+              { fieldName: "Birthday", tableName: "Bdate" }, 
+              { fieldName: "Address", tableName: "Address" },
+              { fieldName: "Family Unit", tableName: "Fam_unit" },
+            ],
+            "family_member"
+          )}
         </List>
         <Divider />
         <List>
-          {secondaryListItems("Medical Records", [
-            { fieldName: "SSN" },
-            { fieldName: "Date" },
-            { fieldName: "Reason" },
-            { fieldName: "Diagnosis" },
-            { fieldName: "Doctor Number" },
-          ])}
+          {secondaryListItems(
+            "Medical Records",
+            [
+              { fieldName: "SSN", tableName: "SSN" },
+              { fieldName: "Date", tableName: "Date" },
+              { fieldName: "Reason", tableName: "Reason" },
+              { fieldName: "Illness Number", tableName: "I_num" },
+              { fieldName: "Doctor Number", tableName: "Dnum" },
+            ],
+            "med_rec"
+          )}
         </List>
         <Divider />
         <List>
-          {secondaryListItems("Doctors", [
-            { fieldName: "Doctor Name" },
-            { fieldName: "Doctor Location" },
-          ])}
+          {secondaryListItems(
+            "Doctors",
+            [
+              { fieldName: "Doctor Name", tableName: "Dname" },
+              { fieldName: "Doctor Location", tableName: "Dlocation" },
+            ],
+            "doctors"
+          )}
         </List>
         <Divider />
         <List>
-          {secondaryListItems("Illness", [
-            { fieldName: "Illness Name" },
-            { fieldName: "Medication Number" },
-            { fieldName: "Illness Description" },
-          ])}
+          {secondaryListItems(
+            "Illness",
+            [
+              { fieldName: "Illness Name", tableName: "Iname" },
+              { fieldName: "Medication Number", tableName: "Med_num" },
+              { fieldName: "Illness Description", tableName: "Idesc" },
+            ],
+            "illness"
+          )}
         </List>
         <Divider />
         <List>
-          {secondaryListItems("Medication", [
-            { fieldName: "Medication Name" },
-            { fieldName: "Medication Type" },
-            { fieldName: "Medication Effect" },
-          ])}
+          {secondaryListItems(
+            "Medication",
+            [
+              { fieldName: "Medication Name", tableName: "name" },
+              { fieldName: "Medication Type", tableName: "type" },
+              { fieldName: "Medication Effect", tableName: "effects" },
+            ],
+            "medications"
+          )}
         </List>
       </Drawer>
     </div>

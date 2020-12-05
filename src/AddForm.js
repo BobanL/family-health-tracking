@@ -8,13 +8,19 @@ import Paper from "@material-ui/core/Paper";
 import { Field, Form, Formik, useFormik } from "formik";
 
 export const AddForm = ({ history }) => {
+  const [status, setStatus] = React.useState("");
   const classes = useStyles();
   const formFields = history?.location?.state?.form;
+  const tableName = history?.location?.state?.table;
+  try {
+    formFields.forEach((x) => {
+      initValues[x.tableName] = "";
+    });
+  } catch (error) {}
   let initValues = {};
-  formFields.map((x) => {
-    initValues[x.fieldName] = "";
+  const formik = useFormik({
+    initialValues: initValues,
   });
-  const formik = useFormik({ initialValues: initValues });
   return (
     <main className={classes.content}>
       <div className={classes.appBarSpacer} />
@@ -22,14 +28,35 @@ export const AddForm = ({ history }) => {
         <Grid container>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
+              <div>{status ? status : ""}</div>
               <Formik
                 initialValues={{
                   email: "",
                   password: "",
                 }}
-                onSubmit={(values, { setSubmitting }) => {
-                  setSubmitting(false);
+                onSubmit={async (values, { setSubmitting }) => {
                   console.log(formik.values);
+                  const response = await fetch(
+                    `http://localhost:3001/${tableName}`,
+                    {
+                      method: "POST",
+                      body: JSON.stringify(formik.values),
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                    }
+                  );
+                  const jsonResponse = await response.json();
+                  console.log(jsonResponse);
+                  if (jsonResponse.message) {
+                    setStatus("Error " + jsonResponse.message);
+                  } else {
+                    setStatus(
+                      jsonResponse.id
+                        ? "Success! ID: " + jsonResponse.id
+                        : "Success "
+                    );
+                  }
                 }}
               >
                 {({ submitForm, isSubmitting }) => (
@@ -37,7 +64,7 @@ export const AddForm = ({ history }) => {
                     {formFields?.map((x, i) => (
                       <div key={x.fieldName + "i"}>
                         <Field
-                          id={x.fieldName}
+                          id={x.tableName}
                           component={TextField}
                           name={x.fieldName}
                           type="text"
