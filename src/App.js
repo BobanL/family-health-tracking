@@ -8,7 +8,6 @@ import TablePage from "./TablePage";
 import { Login } from "./Login";
 function App() {
   const classes = useStyles();
-
   return (
     <BrowserRouter>
       <div className={classes.root}>

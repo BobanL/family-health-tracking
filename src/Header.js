@@ -13,6 +13,7 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import { mainListItems, secondaryListItems } from "./listItems";
 import { useStyles } from "./Dashboard";
+import Cookies from "universal-cookie";
 
 export const Header = () => {
   const classes = useStyles();
@@ -20,6 +21,8 @@ export const Header = () => {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+  const cookies = new Cookies();
+
   return (
     <div>
       <AppBar
@@ -49,9 +52,7 @@ export const Header = () => {
             Dashboard
           </Typography>
           <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
+            <Badge color="secondary">{cookies.get("familyUnit")}</Badge>
           </IconButton>
         </Toolbar>
       </AppBar>

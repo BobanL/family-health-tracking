@@ -8,8 +8,11 @@ import Paper from "@material-ui/core/Paper";
 import { Field, Form, Formik } from "formik";
 import Cookies from "universal-cookie";
 
-export const Login = ({ history }) => {
+export const Login = () => {
   const classes = useStyles();
+  const [unum, setUnum] = React.useState("");
+  const [ssn, setSSN] = React.useState("");
+  const cookies = new Cookies();
   return (
     <main className={classes.content}>
       <div className={classes.appBarSpacer} />
@@ -19,25 +22,15 @@ export const Login = ({ history }) => {
             <Paper className={classes.paper}>
               <Formik
                 initialValues={{
-                  email: "",
-                  password: "",
-                }}
-                validate={(values) => {
-                  const errors = {};
-                  if (!values.email) {
-                    errors.email = "Required";
-                  } else if (
-                    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(
-                      values.email
-                    )
-                  ) {
-                    errors.email = "Invalid email address";
-                  }
-                  return errors;
+                  FAM_Unum: "",
+                  Parent1_SSN: "",
                 }}
                 onSubmit={(values, { setSubmitting }) => {
                   setSubmitting(false);
-                  console.log(values);
+                  cookies.set("familyUnit", unum, { path: "/" });
+                  cookies.set("parentSSN", ssn, { path: "/" });
+                  window.location.reload();
+                  window.location.href = "/";
                 }}
               >
                 {({ submitForm, isSubmitting }) => (
@@ -45,17 +38,21 @@ export const Login = ({ history }) => {
                     <div>
                       <Field
                         component={TextField}
-                        name="Family Unit"
+                        name="FAM_Unum"
                         type="text"
                         label="Family Unit Number"
+                        value={unum}
+                        onChange={(e) => setUnum(e.target.value)}
                       />
                       <br></br>
                       <br></br>
                       <Field
                         component={TextField}
-                        name="ParentSSN"
+                        name="Parent1_SSN"
                         type="text"
                         label="A Parent's SSN"
+                        value={ssn}
+                        onChange={(e) => setSSN(e.target.value)}
                       />
                       <br></br>
                       <br></br>
