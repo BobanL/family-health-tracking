@@ -51,11 +51,13 @@ export const AddForm = ({ history }) => {
                   if (jsonResponse.message) {
                     setStatus("Error " + jsonResponse.message);
                   } else {
-                    setStatus(
-                      jsonResponse.id
-                        ? "Success! ID: " + jsonResponse.id
-                        : "Success "
-                    );
+                    if (jsonResponse.id) {
+                      console.log("Success! ID: " + jsonResponse.id);
+                      setStatus("Success! ID: " + jsonResponse.id);
+                    } else {
+                      console.log("Success");
+                      setStatus("Success");
+                    }
                   }
                 }}
               >
