@@ -1,7 +1,7 @@
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
+To run the backend along with this, please view this [repo](https://github.com/BobanL/family-health-tracking-backend)
 ## Available Scripts
 
 In the project directory, you can run:
