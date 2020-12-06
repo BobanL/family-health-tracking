@@ -28,34 +28,31 @@ class Dashboard extends React.Component {
       radioButtonValue: "",
       radioButtonQueryResponse: null,
       last5MedRecords: null,
-      famUnit: null,
+      famUnit: 1,
     };
   }
 
   async componentDidMount() {
     const cookies = new Cookies();
     if (cookies.get("familyUnit")) {
-      this.setState({ famUnit: cookies.get("familyUnit") });
-      console.log(this.state.famUnit);
+      await this.setState({ famUnit: cookies.get("familyUnit") });
       const get = await fetch(
         `http://localhost:3001/getBy/Last5MedicalRecords`,
         {
           method: "POST",
-          body: JSON.stringify({ params: cookies.get("familyUnit") }),
+          body: JSON.stringify({ params: this.state.famUnit }),
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
       const fullResponse = await get.json();
-      console.log(fullResponse[0]);
-      this.setState({ last5MedRecords: fullResponse[0] });
+      await this.setState({ last5MedRecords: fullResponse[0] });
     }
   }
 
   render() {
     const { classes } = this.props;
-    const cookies = new Cookies();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
     const handleChange = (event) => {
       //setValue(event.target.value);
@@ -64,7 +61,6 @@ class Dashboard extends React.Component {
     };
     const noCookies = "Please select your family account";
     let lastRecords = "Unable to retrieve last 5 records";
-    console.log(this.state.last5MedRecords);
     if (this.state.last5MedRecords) {
       lastRecords = (
         <TableContainer component={Paper}>
@@ -100,7 +96,7 @@ class Dashboard extends React.Component {
             {/* Chart */}
             <Grid item xs={12} md={8} lg={9}>
               <Paper className={fixedHeightPaper}>
-                {!cookies.get("familyUnit") ? noCookies : lastRecords}
+                {!this.state.famUnit ? noCookies : lastRecords}
               </Paper>
             </Grid>
             {/* Recent Deposits */}
