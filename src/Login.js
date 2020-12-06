@@ -10,6 +10,7 @@ import Cookies from "universal-cookie";
 
 export const Login = () => {
   const classes = useStyles();
+  const [status, setStatus] = React.useState("");
   const [unum, setUnum] = React.useState("");
   const [ssn, setSSN] = React.useState("");
   const cookies = new Cookies();
@@ -20,17 +21,52 @@ export const Login = () => {
         <Grid container>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
+              <div>{status ? status : ""}</div>
               <Formik
                 initialValues={{
                   FAM_Unum: "",
                   Parent1_SSN: "",
                 }}
-                onSubmit={(values, { setSubmitting }) => {
+                onSubmit={async (values, { setSubmitting }) => {
                   setSubmitting(false);
-                  cookies.set("familyUnit", unum, { path: "/" });
-                  cookies.set("parentSSN", ssn, { path: "/" });
-                  window.location.reload();
-                  window.location.href = "/";
+                  let fam = false;
+                  try {
+                    const get = await fetch(
+                      `http://localhost:3001/get/fam_unit/FAM_Unum/${unum}`
+                    );
+                    const response = await get.json();
+                    if (
+                      response.length > 0 &&
+                      response[0].FAM_Unum === parseInt(unum)
+                    ) {
+                      fam = true;
+                      cookies.set("familyUnit", unum, {
+                        path: "/",
+                      });
+                    }
+                  } catch (error) {}
+                  // known bug, if a parent with multiple family units
+                  if (!fam) {
+                    try {
+                      const get = await fetch(
+                        `http://localhost:3001/get/fam_unit/Parent1_SSN/${ssn}`
+                      );
+                      const response = await get.json();
+                      console.log(response[0].FAM_Unum);
+                      cookies.set("familyUnit", response[0].FAM_Unum, {
+                        path: "/",
+                      });
+                      fam = true;
+                    } catch (error) {}
+                  }
+                  if (fam) {
+                    window.location.reload();
+                    window.location.href = "/";
+                  } else {
+                    setStatus(
+                      "Unable to find Family Unit with provided details"
+                    );
+                  }
                 }}
               >
                 {({ submitForm, isSubmitting }) => (
@@ -45,6 +81,8 @@ export const Login = () => {
                         onChange={(e) => setUnum(e.target.value)}
                       />
                       <br></br>
+                      <br></br>
+                      OR
                       <br></br>
                       <Field
                         component={TextField}
