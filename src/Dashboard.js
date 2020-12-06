@@ -11,6 +11,18 @@ import Chart from "./Chart";
 import Deposits from "./Deposits";
 import Orders from "./Orders";
 import { Header } from "./Header";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Cookies from "universal-cookie";
 
 const drawerWidth = 250;
 export const useStyles = makeStyles((theme) => ({
@@ -103,6 +115,18 @@ export const useStyles = makeStyles((theme) => ({
 export function Dashboard() {
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const cookies = new Cookies();
+  let fullResponse = [{}];
+  if (cookies.get("familyUnit")) {
+    //const get = await fetch(`http://localhost:3001/get/med_rec/1/1`);
+    //fullResponse = await get.json();
+  }
+  const [value, setValue] = React.useState("female");
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+    console.log(event.target.value);
+  };
 
   return (
     <main className={classes.content}>
@@ -112,13 +136,57 @@ export function Dashboard() {
           {/* Chart */}
           <Grid item xs={12} md={8} lg={9}>
             <Paper className={fixedHeightPaper}>
-              <Chart />
+              {!cookies.get("familyUnit") ? (
+                "Please select your family account"
+              ) : (
+                <TableContainer component={Paper}>
+                  <Table className={classes.table} aria-label="simple table">
+                    <TableHead>
+                      <TableRow>
+                        {Object.keys(fullResponse[0]).map((key) => (
+                          <TableCell>{key}</TableCell>
+                        ))}
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {fullResponse.map((row) => (
+                        <TableRow>
+                          {Object.keys(row).map((key) => (
+                            <TableCell component="th" scope="row">
+                              {row[key]}
+                            </TableCell>
+                          ))}
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              )}
             </Paper>
           </Grid>
           {/* Recent Deposits */}
           <Grid item xs={12} md={4} lg={3}>
             <Paper className={fixedHeightPaper}>
-              <Deposits />
+              {" "}
+              <FormControl component="fieldset">
+                <FormLabel component="legend">Table</FormLabel>
+                <RadioGroup
+                  aria-label="table"
+                  name="table1"
+                  onChange={handleChange}
+                >
+                  <FormControlLabel
+                    value="female"
+                    control={<Radio />}
+                    label="Female"
+                  />
+                  <FormControlLabel
+                    value="male"
+                    control={<Radio />}
+                    label="Male"
+                  />
+                </RadioGroup>
+              </FormControl>
             </Paper>
           </Grid>
           {/* Recent Orders */}

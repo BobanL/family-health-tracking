@@ -15,7 +15,7 @@ export const mainListItems = (tableName, fieldName, id, classes) => {
       <Link
         style={{ textDecoration: "none", color: "#000" }}
         to={{
-          pathname: `/table`,
+          pathname: `/`,
           state: {
             tableName,
             fieldName,
