@@ -22,24 +22,75 @@ import Cookies from "universal-cookie";
 import { style } from "./styles";
 
 class Dashboard extends React.Component {
-  componentDidMount() {
+  constructor(props) {
+    super(props);
+    this.state = {
+      radioButtonValue: "",
+      radioButtonQueryResponse: null,
+      last5MedRecords: null,
+      famUnit: null,
+    };
+  }
+
+  async componentDidMount() {
     const cookies = new Cookies();
     if (cookies.get("familyUnit")) {
-      //const get = await fetch(`http://localhost:3001/get/med_rec/1/1`);
-      //fullResponse = await get.json();
+      this.setState({ famUnit: cookies.get("familyUnit") });
+      console.log(this.state.famUnit);
+      const get = await fetch(
+        `http://localhost:3001/getBy/Last5MedicalRecords`,
+        {
+          method: "POST",
+          body: JSON.stringify({ params: cookies.get("familyUnit") }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const fullResponse = await get.json();
+      console.log(fullResponse[0]);
+      this.setState({ last5MedRecords: fullResponse[0] });
     }
   }
 
   render() {
-    const cookies = new Cookies();
     const { classes } = this.props;
+    const cookies = new Cookies();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-    let fullResponse = [{}];
     const handleChange = (event) => {
       //setValue(event.target.value);
       console.log(event.target.value);
+      this.setState({ radioButtonValue: event.target.value });
     };
-    // const [value, setValue] = React.useState("female");
+    const noCookies = "Please select your family account";
+    let lastRecords = "Unable to retrieve last 5 records";
+    console.log(this.state.last5MedRecords);
+    if (this.state.last5MedRecords) {
+      lastRecords = (
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                {Object.keys(this.state.last5MedRecords[0]).map((key) => (
+                  <TableCell>{key}</TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {this.state.last5MedRecords.map((row) => (
+                <TableRow>
+                  {Object.keys(row).map((key) => (
+                    <TableCell component="th" scope="row">
+                      {row[key]}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      );
+    }
 
     return (
       <main className={classes.content}>
@@ -49,32 +100,7 @@ class Dashboard extends React.Component {
             {/* Chart */}
             <Grid item xs={12} md={8} lg={9}>
               <Paper className={fixedHeightPaper}>
-                {!cookies.get("familyUnit") ? (
-                  "Please select your family account"
-                ) : (
-                  <TableContainer component={Paper}>
-                    <Table className={classes.table} aria-label="simple table">
-                      <TableHead>
-                        <TableRow>
-                          {Object.keys(fullResponse[0]).map((key) => (
-                            <TableCell>{key}</TableCell>
-                          ))}
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {fullResponse.map((row) => (
-                          <TableRow>
-                            {Object.keys(row).map((key) => (
-                              <TableCell component="th" scope="row">
-                                {row[key]}
-                              </TableCell>
-                            ))}
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                )}
+                {!cookies.get("familyUnit") ? noCookies : lastRecords}
               </Paper>
             </Grid>
             {/* Recent Deposits */}
@@ -82,7 +108,7 @@ class Dashboard extends React.Component {
               <Paper className={fixedHeightPaper}>
                 {" "}
                 <FormControl component="fieldset">
-                  <FormLabel component="legend">Table</FormLabel>
+                  <FormLabel component="legend">Query</FormLabel>
                   <RadioGroup
                     aria-label="table"
                     name="table1"
