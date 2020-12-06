@@ -1,11 +1,13 @@
 import "./App.css";
-import { Dashboard, useStyles } from "./Dashboard";
+import Dashboard from "./Dashboard";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Header } from "./Header";
 import { CssBaseline } from "@material-ui/core";
 import { AddForm } from "./AddForm";
 import TablePage from "./TablePage";
 import { Login } from "./Login";
+import { useStyles } from "./styles";
+
 function App() {
   const classes = useStyles();
   return (

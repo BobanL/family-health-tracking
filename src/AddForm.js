@@ -1,11 +1,11 @@
 import { Button, TextField, LinearProgress } from "@material-ui/core";
-import { useStyles } from "./Dashboard";
 import Container from "@material-ui/core/Container";
 import * as React from "react";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { Field, Form, Formik, useFormik } from "formik";
+import { useStyles } from "./styles";
 
 export const AddForm = ({ history }) => {
   const [status, setStatus] = React.useState("");

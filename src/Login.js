@@ -1,5 +1,5 @@
 import { Button, TextField, LinearProgress } from "@material-ui/core";
-import { useStyles } from "./Dashboard";
+import { useStyles } from "./styles";
 import Container from "@material-ui/core/Container";
 import * as React from "react";
 import Box from "@material-ui/core/Box";

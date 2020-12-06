@@ -9,8 +9,10 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import { style } from "./styles";
+import { withStyles } from "@material-ui/core";
 
-export default class TablePage extends React.Component {
+class TablePage extends React.Component {
   state = {
     loading: true,
   };
@@ -40,20 +42,7 @@ export default class TablePage extends React.Component {
   }
 
   render() {
-    const classes = this.props?.location?.state?.classes;
-    if (!classes) {
-      return (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          404
-        </div>
-      );
-    }
+    const { classes } = this.props;
     if (this.state.loading) {
       return (
         <main className={classes.content}>
@@ -133,3 +122,5 @@ export default class TablePage extends React.Component {
     );
   }
 }
+
+export default withStyles(style)(TablePage);

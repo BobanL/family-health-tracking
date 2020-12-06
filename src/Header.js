@@ -11,7 +11,7 @@ import Badge from "@material-ui/core/Badge";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { mainListItems, secondaryListItems } from "./listItems";
-import { useStyles } from "./Dashboard";
+import { useStyles } from "./styles";
 import Cookies from "universal-cookie";
 
 export const Header = () => {
