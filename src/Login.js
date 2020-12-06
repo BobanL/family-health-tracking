@@ -47,16 +47,35 @@ export const Login = () => {
                   } catch (error) {}
                   // known bug, if a parent with multiple family units
                   if (!fam) {
+                    let get;
                     try {
-                      const get = await fetch(
+                      get = await fetch(
                         `http://localhost:3001/get/fam_unit/Parent1_SSN/${ssn}`
                       );
                       const response = await get.json();
-                      console.log(response[0].FAM_Unum);
-                      cookies.set("familyUnit", response[0].FAM_Unum, {
-                        path: "/",
-                      });
-                      fam = true;
+                      if (response) {
+                        console.log(response[0].FAM_Unum);
+                        cookies.set("familyUnit", response[0].FAM_Unum, {
+                          path: "/",
+                        });
+                        fam = true;
+                      }
+                    } catch (error) {}
+                  }
+                  if (!fam) {
+                    let get;
+                    try {
+                      get = await fetch(
+                        `http://localhost:3001/get/fam_unit/Parent2_SSN/${ssn}`
+                      );
+                      const response = await get.json();
+                      if (response) {
+                        console.log(response[0].FAM_Unum);
+                        cookies.set("familyUnit", response[0].FAM_Unum, {
+                          path: "/",
+                        });
+                        fam = true;
+                      }
                     } catch (error) {}
                   }
                   if (fam) {
