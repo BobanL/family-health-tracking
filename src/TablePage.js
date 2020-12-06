@@ -18,7 +18,19 @@ class TablePage extends React.Component {
   };
 
   async componentDidMount() {
-    if (this.props?.location?.state) {
+    if (this.props?.location?.state?.procedureName) {
+      const { procedureName, id } = this.props?.location?.state;
+
+      const get = await fetch(`http://localhost:3001/getBy/${procedureName}`, {
+        method: "POST",
+        body: JSON.stringify({ params: id }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const response = await get.json();
+      this.setState({ formData: response[0], loading: false });
+    } else if (this.props?.location?.state) {
       const { tableName, fieldName, id } = this.props?.location?.state;
       const get = await fetch(
         `http://localhost:3001/get/${tableName}/${fieldName}/${id}`
@@ -30,7 +42,22 @@ class TablePage extends React.Component {
 
   async componentDidUpdate(prevProps, prevState) {
     if (prevProps !== this.props) {
-      if (this.props?.location?.state) {
+      if (this.props?.location?.state?.procedureName) {
+        const { procedureName, id } = this.props?.location?.state;
+
+        const get = await fetch(
+          `http://localhost:3001/getBy/${procedureName}`,
+          {
+            method: "POST",
+            body: JSON.stringify({ params: id }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const response = await get.json();
+        this.setState({ formData: response[0], loading: false });
+      } else if (this.props?.location?.state) {
         const { tableName, fieldName, id } = this.props?.location?.state;
         const get = await fetch(
           `http://localhost:3001/get/${tableName}/${fieldName}/${id}`

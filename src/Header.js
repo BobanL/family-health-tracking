@@ -69,7 +69,7 @@ export const Header = () => {
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems("med_rec", "SSN", 123, classes)}</List>
+        <List>{mainListItems("med_rec", "SSN", 123)}</List>
         <Divider />
         <List>
           {secondaryListItems(
@@ -79,7 +79,6 @@ export const Header = () => {
               { fieldName: "Parent 2 SSN", tableName: "Parent2_SSN" },
             ],
             "fam_unit",
-            classes,
             "FAM_Unum",
             famUnitNumber
           )}
@@ -99,7 +98,6 @@ export const Header = () => {
               { fieldName: "Family Unit", tableName: "Fam_unit" },
             ],
             "family_member",
-            classes,
             "Fam_unit",
             famUnitNumber
           )}
@@ -116,9 +114,9 @@ export const Header = () => {
               { fieldName: "Doctor Number", tableName: "Dnum" },
             ],
             "med_rec",
-            classes,
-            "1",
-            "1"
+            null,
+            famUnitNumber,
+            "MedRecByFamilyUnit"
           )}
         </List>
         <Divider />
@@ -130,7 +128,6 @@ export const Header = () => {
               { fieldName: "Doctor Location", tableName: "Dlocation" },
             ],
             "doctors",
-            classes,
             "1",
             "1"
           )}
@@ -145,7 +142,6 @@ export const Header = () => {
               { fieldName: "Illness Description", tableName: "Idesc" },
             ],
             "illness",
-            classes,
             "1",
             "1"
           )}
@@ -160,7 +156,6 @@ export const Header = () => {
               { fieldName: "Medication Effect", tableName: "effects" },
             ],
             "medications",
-            classes,
             "1",
             "1"
           )}

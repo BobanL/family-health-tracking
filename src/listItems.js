@@ -9,7 +9,7 @@ import AssignmentIcon from "@material-ui/icons/Assignment";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import { Link } from "react-router-dom";
 
-export const mainListItems = (tableName, fieldName, id, classes) => {
+export const mainListItems = (tableName, fieldName, id) => {
   return (
     <div>
       <Link
@@ -20,7 +20,6 @@ export const mainListItems = (tableName, fieldName, id, classes) => {
             tableName,
             fieldName,
             id,
-            classes,
           },
         }}
       >
@@ -39,7 +38,6 @@ export const mainListItems = (tableName, fieldName, id, classes) => {
             tableName,
             fieldName,
             id,
-            classes,
           },
         }}
       >
@@ -58,9 +56,9 @@ export const secondaryListItems = (
   name,
   formFields,
   tableName,
-  classes,
   fieldName,
-  id
+  id,
+  procedureName
 ) => (
   <div>
     <ListSubheader inset>{name}</ListSubheader>
@@ -91,7 +89,7 @@ export const secondaryListItems = (
           fieldName,
           id,
           tableName,
-          classes,
+          procedureName,
         },
       }}
     >
