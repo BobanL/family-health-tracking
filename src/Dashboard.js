@@ -25,7 +25,7 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      radioButtonValue: "",
+      radioButtonValue: null,
       radioButtonQueryResponse: null,
       last5MedRecords: null,
       famUnit: 1,
@@ -51,16 +51,42 @@ class Dashboard extends React.Component {
     }
   }
 
+  async componentDidUpdate(prevProps, prevState) {
+    if (prevState.radioButtonValue !== this.state.radioButtonValue) {
+      let params;
+      if (
+        [
+          "YearToDateIllnessList",
+          "YearToDateIllnessListFamilyMembers",
+        ].includes(this.state.radioButtonValue)
+      ) {
+        params = this.state.famUnit;
+      }
+      const get = await fetch(
+        `http://localhost:3001/getBy/${this.state.radioButtonValue}`,
+        {
+          method: "POST",
+          body: JSON.stringify({ params }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const fullResponse = await get.json();
+      await this.setState({ radioButtonQueryResponse: fullResponse[0] });
+    }
+  }
+
   render() {
     const { classes } = this.props;
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
     const handleChange = (event) => {
-      //setValue(event.target.value);
-      console.log(event.target.value);
       this.setState({ radioButtonValue: event.target.value });
     };
     const noCookies = "Please select your family account";
     let lastRecords = "Unable to retrieve last 5 records";
+    let radioButtonRecords =
+      "Please select a radio button above to populate a table";
     if (this.state.last5MedRecords) {
       lastRecords = (
         <TableContainer component={Paper}>
@@ -87,7 +113,34 @@ class Dashboard extends React.Component {
         </TableContainer>
       );
     }
-
+    if (this.state.radioButtonQueryResponse) {
+      radioButtonRecords = (
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                {Object.keys(this.state.radioButtonQueryResponse[0]).map(
+                  (key) => (
+                    <TableCell>{key}</TableCell>
+                  )
+                )}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {this.state.radioButtonQueryResponse.map((row) => (
+                <TableRow>
+                  {Object.keys(row).map((key) => (
+                    <TableCell component="th" scope="row">
+                      {row[key]}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      );
+    }
     return (
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
@@ -111,14 +164,19 @@ class Dashboard extends React.Component {
                     onChange={handleChange}
                   >
                     <FormControlLabel
-                      value="female"
+                      value="MedicationList"
                       control={<Radio />}
-                      label="Female"
+                      label="Medications and Illnesses"
                     />
                     <FormControlLabel
-                      value="male"
+                      value="YearToDateIllnessList"
                       control={<Radio />}
-                      label="Male"
+                      label="YTD Illnesses"
+                    />
+                    <FormControlLabel
+                      value="YearToDateIllnessListFamilyMembers"
+                      control={<Radio />}
+                      label="YTD Illnesses With Family Member"
                     />
                   </RadioGroup>
                 </FormControl>
@@ -126,9 +184,7 @@ class Dashboard extends React.Component {
             </Grid>
             {/* Recent Orders */}
             <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <Orders />
-              </Paper>
+              <Paper className={classes.paper}>{radioButtonRecords}</Paper>
             </Grid>
           </Grid>
           <Box sx={{ pt: 4 }}></Box>
