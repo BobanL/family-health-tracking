@@ -26,14 +26,16 @@ export default class TablePage extends React.Component {
     }
   }
 
-  async componentDidUpdate() {
-    if (this.props?.location?.state) {
-      const { tableName, fieldName, id } = this.props?.location?.state;
-      const get = await fetch(
-        `http://localhost:3001/get/${tableName}/${fieldName}/${id}`
-      );
-      const response = await get.json();
-      this.setState({ formData: response, loading: false });
+  async componentDidUpdate(prevProps, prevState) {
+    if (prevProps !== this.props) {
+      if (this.props?.location?.state) {
+        const { tableName, fieldName, id } = this.props?.location?.state;
+        const get = await fetch(
+          `http://localhost:3001/get/${tableName}/${fieldName}/${id}`
+        );
+        const response = await get.json();
+        this.setState({ formData: response, loading: false });
+      }
     }
   }
 
