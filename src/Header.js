@@ -10,7 +10,6 @@ import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import { mainListItems, secondaryListItems } from "./listItems";
 import { useStyles } from "./Dashboard";
 import Cookies from "universal-cookie";
@@ -22,6 +21,7 @@ export const Header = () => {
     setOpen(!open);
   };
   const cookies = new Cookies();
+  const famUnitNumber = cookies.get("familyUnit");
 
   return (
     <div>
@@ -78,7 +78,10 @@ export const Header = () => {
               { fieldName: "Parent 1 SSN", tableName: "Parent1_SSN" },
               { fieldName: "Parent 2 SSN", tableName: "Parent2_SSN" },
             ],
-            "fam_unit"
+            "fam_unit",
+            classes,
+            "FAM_Unum",
+            famUnitNumber
           )}
         </List>
         <Divider />
@@ -91,11 +94,14 @@ export const Header = () => {
               { fieldName: "Middle Name", tableName: "Minit" },
               { fieldName: "Last Name", tableName: "Lname" },
               { fieldName: "Sex", tableName: "Sex" },
-              { fieldName: "Birthday", tableName: "Bdate" }, 
+              { fieldName: "Birthday", tableName: "Bdate" },
               { fieldName: "Address", tableName: "Address" },
               { fieldName: "Family Unit", tableName: "Fam_unit" },
             ],
-            "family_member"
+            "family_member",
+            classes,
+            "Fam_unit",
+            famUnitNumber
           )}
         </List>
         <Divider />
@@ -109,7 +115,10 @@ export const Header = () => {
               { fieldName: "Illness Number", tableName: "I_num" },
               { fieldName: "Doctor Number", tableName: "Dnum" },
             ],
-            "med_rec"
+            "med_rec",
+            classes,
+            "1",
+            "1"
           )}
         </List>
         <Divider />
@@ -120,7 +129,10 @@ export const Header = () => {
               { fieldName: "Doctor Name", tableName: "Dname" },
               { fieldName: "Doctor Location", tableName: "Dlocation" },
             ],
-            "doctors"
+            "doctors",
+            classes,
+            "1",
+            "1"
           )}
         </List>
         <Divider />
@@ -132,7 +144,10 @@ export const Header = () => {
               { fieldName: "Medication Number", tableName: "Med_num" },
               { fieldName: "Illness Description", tableName: "Idesc" },
             ],
-            "illness"
+            "illness",
+            classes,
+            "1",
+            "1"
           )}
         </List>
         <Divider />
@@ -144,7 +159,10 @@ export const Header = () => {
               { fieldName: "Medication Type", tableName: "type" },
               { fieldName: "Medication Effect", tableName: "effects" },
             ],
-            "medications"
+            "medications",
+            classes,
+            "1",
+            "1"
           )}
         </List>
       </Drawer>

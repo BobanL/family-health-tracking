@@ -54,7 +54,14 @@ export const mainListItems = (tableName, fieldName, id, classes) => {
   );
 };
 
-export const secondaryListItems = (name, formFields, tableName) => (
+export const secondaryListItems = (
+  name,
+  formFields,
+  tableName,
+  classes,
+  fieldName,
+  id
+) => (
   <div>
     <ListSubheader inset>{name}</ListSubheader>
     <Link
@@ -74,11 +81,26 @@ export const secondaryListItems = (name, formFields, tableName) => (
         <ListItemText primary={"Add " + name} />
       </ListItem>
     </Link>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary={"List " + name} />
-    </ListItem>
+    <Link
+      style={{ textDecoration: "none", color: "#000" }}
+      to={{
+        pathname: `/table`,
+        state: {
+          form: formFields,
+          table: tableName,
+          fieldName,
+          id,
+          tableName,
+          classes,
+        },
+      }}
+    >
+      <ListItem button>
+        <ListItemIcon>
+          <AssignmentIcon />
+        </ListItemIcon>
+        <ListItemText primary={name + " Info"} />
+      </ListItem>
+    </Link>
   </div>
 );
